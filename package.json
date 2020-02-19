@@ -4,8 +4,11 @@
   "description": "",
   "main": "session.js",
   "scripts": {
-    "start": "node src/session.js",
-    "dev": "nodemon src/session.js",
+    "start": "npm install && npm run server",
+    "server": "npm run webpack-build && node src/session.js",
+    "webpack-build": "webpack --config src/webpack/webpack.config.js --display-error-details --mode=development --progress",
+    "server-dev": "nodemon src/session.js",
+    "webpack-dev": "webpack --config src/webpack/webpack.config.js --display-error-details --mode=development --progress --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "leonardo pinzon",
@@ -16,6 +19,8 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
   }
 }
