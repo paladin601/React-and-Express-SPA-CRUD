@@ -10,6 +10,8 @@
 
     MongoDB
 
+    Babel
+
     Optional: Yarn.
 
 ## 2 - Run project
