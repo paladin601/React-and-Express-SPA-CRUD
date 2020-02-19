@@ -5,9 +5,14 @@ const Task = require('../model/task');
 
 router.get('/', async (req, res) => {
    const tasks = await Task.find();
-   console.log(tasks);
    res.json(tasks)
 })
+
+// GET Task
+router.get('/:id', async (req, res) => {
+   const task = await Task.findById(req.params.id);
+   res.json(task);
+ });
 
 router.post('/', async (req, res) => {
    const { title, description } = req.body;
