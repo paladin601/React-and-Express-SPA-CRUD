@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-    useHistory 
+    useHistory
 } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 
@@ -31,10 +31,11 @@ export default () => {
         }
     }
 
-    const fetchPeoples =  () => {
+    const fetchPeoples = () => {
         fetch('/api/crud')
             .then(res => res.json())
             .then(data => {
+                window.document.getElementById("display").classList.remove('d-none');
                 setPeople(data);
                 console.log(peoples);
             });
@@ -43,9 +44,14 @@ export default () => {
     useEffect(() => {
         fetchPeoples();
     }, []);
-    
-    return (
-        <div className="card">
+
+    function goToForm(event) {
+        event.preventDefault();
+        history.push(`/`);
+    }
+
+    function Table() {
+        return (
             <div className="table-responsive">
                 <link rel="stylesheet" href="modules/@fortawesome/fontawesome-free/css/all.min.css" />
 
@@ -82,9 +88,31 @@ export default () => {
                         }
                     </tbody>
                 </table>
-            </div>
-        </div>
 
+            </div>
+        )
+    }
+
+    function Error() {
+        return (
+            <div className="card p-4">
+                <div className="alert alert-danger alert-dismissible">
+                    <a href="#" className="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{t('Message.2')}</strong>
+                </div>
+                <button className="btn btn-success btn-lg btn-block" onClick={() => goToForm(event)}>{t('Send.2')} </button>
+            </div>
+        )
+    }
+    return (
+        <div id="display" className="d-none">
+            {
+                peoples.length > 0 ?
+                    <Table />
+                    :
+                    <Error />
+            }
+        </div>
     )
 }
 

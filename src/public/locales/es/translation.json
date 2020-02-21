@@ -22,12 +22,20 @@
         "1": "Edad"
     },
     "Send": {
-        "1": "Enviar"
+        "1": "Enviar",
+        "2": "Ir al Formulario"
     },
     "Actions": {
         "1": "Acciones"
     },
     "Message":{
-        "1":"¿Estás seguro de que quieres borrarlo?"
+        "1":"¿Estás seguro de que quieres borrarlo?",
+        "2": "No Existen Registros"
+    },
+    "Error": {
+        "1": "El Nombre solo puede contener letras",
+        "2": "El Apellido solo puede contener letras",
+        "3": "El email tiene que tener un formato como el siguiente: example@dir.com",
+        "4": "La edad sólo puede contener números"
     }
 }

@@ -22,12 +22,20 @@
         "1": "Age"
     },
     "Send": {
-        "1": "Send"
+        "1": "Send",
+        "2": "Go to Form"
     },
     "Actions": {
         "1": "Actions"
     },
-    "Message":{
-        "1":"Are you sure you want to delete it?"
+    "Message": {
+        "1": "Are you sure you want to delete it?",
+        "2": "No Records"
+    },
+    "Error": {
+        "1": "The name can only contain letters",
+        "2": "The Lastname can only contain Letters",
+        "3": "The email must have a format like the following: example@dir.com",
+        "4": "Age can only contain numbers"
     }
 }
