@@ -61,6 +61,7 @@ export default () => {
                             <th scope="col" className="text-center">{t('Name.1')}</th>
                             <th scope="col" className="text-center">{t('LastName.1')}</th>
                             <th scope="col" className="text-center">{t('Email.1')}</th>
+                            <th scope="col" className="text-center">{t('Phone.1')}</th>
                             <th scope="col" className="text-center">{t('Age.1')}</th>
                             <th scope="col" className="text-center">{t('Actions.1')}</th>
                         </tr>
@@ -73,6 +74,7 @@ export default () => {
                                         <td className="text-center">{people.name}</td>
                                         <td className="text-center">{people.lastName}</td>
                                         <td className="text-center">{people.email}</td>
+                                        <td className="text-center">{people.phone}</td>
                                         <td className="text-center">{people.age}</td>
                                         <td className="d-flex justify-content-center">
                                             <button onClick={() => editPeople(event, people._id)} className="btn">

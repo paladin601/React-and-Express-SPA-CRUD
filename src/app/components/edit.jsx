@@ -10,6 +10,7 @@ export default (props) => {
         name: '',
         lastName: '',
         email: '',
+        phone: '',
         age: '',
         _id: ''
     });
@@ -19,12 +20,14 @@ export default (props) => {
         name: /^[A-Z]+$/i,
         lastName: /^[A-Z]+$/i,
         email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-        age: /^([0-9])*$/
+        phone: /^[0]{1}[4]{1}(([1|2]{1}[4|6]{1})|([1]{1}[2]{1}))[0-9]{7}$/,
+        age: /^([1-9])*$/
     });
     const [error, setError] = useState({
         name: false,
         lastName: false,
         email: false,
+        phone: false,
         age: false
     });
 
@@ -42,7 +45,7 @@ export default (props) => {
     }, []);
 
     useEffect(() => {
-        if (!error.name && !error.lastName && !error.email && !error.age) {
+        if (!error.name && !error.lastName && !error.email && !error.phone && !error.age) {
             $("#send").prop("disabled", false);
         } else {
             $("#send").prop("disabled", true);
@@ -80,7 +83,8 @@ export default (props) => {
                 name: people.name,
                 lastName: people.lastName,
                 email: people.email,
-                age: people.age,
+                phone: people.phone,
+                age: people.age
             }),
             headers: {
                 'Accept': 'application/json',
@@ -128,12 +132,19 @@ export default (props) => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="age">{t('Age.1')}</label>
-                        <input type="number" name="age" id="age" className="form-control" onChange={() => handleChange(event)} value={people.age} readOnly />
+                        <label htmlFor="phone">{t('Phone.1')}</label>
+                        <input type="text" name="phone" id="phone" className="form-control" onChange={() => handleChange(event)} value={people.phone} />
                         <div className="alert-error d-none" role="alert">
                             {t('Error.4')}
                         </div>
+                    </div>
 
+                    <div className="form-group">
+                        <label htmlFor="age">{t('Age.1')}</label>
+                        <input type="text" name="age" id="age" className="form-control" onChange={() => handleChange(event)} value={people.age} />
+                        <div className="alert-error d-none" role="alert">
+                            {t('Error.5')}
+                        </div>
                     </div>
 
                     <button type="submit" id="send" className="btn btn-success btn-lg btn-block">

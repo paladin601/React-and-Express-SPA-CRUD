@@ -15,15 +15,15 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-   const { name, lastName, email, age } = req.body;
-   const people = new People({ name, lastName, email, age });
+   const { name, lastName, email, phone, age } = req.body;
+   const people = new People({ name, lastName, email, phone, age });
    await people.save();
    res.json({ status: '200 - People Saved' });
 })
 
 router.put('/:id', async (req, res) => {
-   const { name, lastName, email, age } = req.body;
-   const newTask = { name, lastName, email, age };
+   const { name, lastName, email, phone, age } = req.body;
+   const newTask = { name, lastName, email, phone, age };
    await People.findByIdAndUpdate(req.params.id, newTask);
    res.json({ status: '200 - People Updated' });
 })

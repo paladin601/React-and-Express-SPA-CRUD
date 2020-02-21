@@ -10,18 +10,21 @@ export default () => {
         name: '',
         lastName: '',
         email: '',
+        phone: '',
         age: ''
     });
     const [regExp, setRegExp] = useState({
         name: /^[A-Z]+$/i,
         lastName: /^[A-Z]+$/i,
         email: /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-        age: /^([0-9])*$/
+        phone: /^[0]{1}[4]{1}(([1|2]{1}[4|6]{1})|([1]{1}[2]{1}))[0-9]{7}$/,
+        age: /^([1-9])*$/
     });
     const [error, setError] = useState({
         name: true,
         lastName: true,
         email: true,
+        phone: true,
         age: true
     });
     let history = useHistory();
@@ -50,7 +53,7 @@ export default () => {
     }
 
     useEffect(() => {
-        if (!error.name && !error.lastName && !error.email && !error.age) {
+        if (!error.name && !error.lastName && !error.email && !error.phone && !error.age) {
             $("#send").prop("disabled", false);
         } else {
             $("#send").prop("disabled", true);
@@ -59,27 +62,23 @@ export default () => {
 
     function addPeople(event) {
         event.preventDefault();
-        if (!error.name && !error.lastName && !error.email && !error.age) {
-            fetch('/api/crud', {
-                method: 'POST',
-                body: JSON.stringify(people),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
+        fetch('/api/crud', {
+            method: 'POST',
+            body: JSON.stringify(people),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                //window.M.toast({ html: 'People Saved' });
+
+
             })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data);
-                    //window.M.toast({ html: 'People Saved' });
-
-
-                })
-                .catch(err => console.error(err));
-            history.push("/detail");
-        } else {
-            $("#send").prop("disabled", true);
-        }
+            .catch(err => console.error(err));
+        history.push("/detail");
     }
 
 
@@ -115,10 +114,17 @@ export default () => {
                     </div>
 
                     <div className="form-group">
+                        <label htmlFor="phone">{t('Phone.1')}</label>
+                        <input type="text" name="phone" id="phone" className="form-control" onChange={() => handleChange(event)} />
+                        <div className="alert-error d-none" role="alert">
+                            {t('Error.4')}
+                        </div>
+                    </div>
+                    <div className="form-group">
                         <label htmlFor="age">{t('Age.1')}</label>
                         <input type="text" name="age" id="age" className="form-control" onChange={() => handleChange(event)} />
                         <div className="alert-error d-none" role="alert">
-                            {t('Error.4')}
+                            {t('Error.5')}
                         </div>
                     </div>
 

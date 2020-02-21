@@ -18,6 +18,9 @@
     "Email": {
         "1": "Email"
     },
+    "Phone": {
+        "1": "Phone Number"
+    },
     "Age": {
         "1": "Age"
     },
@@ -36,6 +39,7 @@
         "1": "The name can only contain letters",
         "2": "The Lastname can only contain Letters",
         "3": "The email must have a format like the following: example@dir.com",
-        "4": "Age can only contain numbers"
+        "4": "The cell phone number has to have a format: 0424 or 0414 or 0412 or 0426 or 0416 and 7 more digits",
+        "5": "Age can only contain numbers and greater than 0"
     }
 }
