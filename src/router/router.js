@@ -1,35 +1,35 @@
 const express = require('express');
 const router = express.Router();
 
-const Task = require('../model/task');
+const People = require('../model/people');
 
 router.get('/', async (req, res) => {
-   const tasks = await Task.find();
-   res.json(tasks)
+   const peoples = await People.find();
+   res.json(peoples)
 })
 
-// GET Task
+// GET People
 router.get('/:id', async (req, res) => {
-   const task = await Task.findById(req.params.id);
-   res.json(task);
- });
+   const people = await People.findById(req.params.id);
+   res.json(people);
+});
 
 router.post('/', async (req, res) => {
-   const { title, description } = req.body;
-   const task = new Task({ title, description });
-   await task.save();
-   res.json({ status: '200 - Task Saved' });
+   const { name, lastName, ci, age } = req.body;
+   const people = new People({ name, lastName, ci, age });
+   await people.save();
+   res.json({ status: '200 - People Saved' });
 })
 
 router.put('/:id', async (req, res) => {
-   const { title, description } = req.body;
-   const newTask = { title, description };
-   await Task.findByIdAndUpdate(req.params.id, newTask);
-   res.json({ status: '200 - Task Updated' });
+   const { name, lastName, ci, age } = req.body;
+   const newTask = { name, lastName, ci, age };
+   await People.findByIdAndUpdate(req.params.id, newTask);
+   res.json({ status: '200 - People Updated' });
 })
 
 router.delete('/:id', async (req, res) => {
-   await Task.findByIdAndRemove(req.params.id);
-   res.json({ status: '200 - Task Deleted' });
+   await People.findByIdAndRemove(req.params.id);
+   res.json({ status: '200 - People Deleted' });
 })
 module.exports = router
