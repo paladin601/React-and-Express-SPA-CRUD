@@ -1,30 +1,20 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect,
+    useHistory 
 } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
-class Detail extends Component {
+export default () => {
+    const { t, i18n } = useTranslation();
+    const [peoples, setPeople] = useState([])
+    let history = useHistory();
 
-    constructor(props) {
-
-        super(props);
-        this.state = {
-            peoples: []
-        };
-        this.fetchPeoples();
+    function editPeople(event, id) {
+        history.push(`/edit/${id}`);
     }
 
-
-
-    editPeople(id) {
-        this.props.history.push(`/edit/${id}`);
-    }
-
-    deletePeople(id) {
-        if (confirm('Are you sure you want to delete it?')) {
+    function deletePeople(event, id) {
+        if (confirm(t('Message.1'))) {
             fetch(`/api/crud/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -36,64 +26,65 @@ class Detail extends Component {
                 .then(data => {
                     console.log(data);
                     //M.toast({ html: 'People deleted' });
-                    this.fetchPeoples();
+                    fetchPeoples();
                 });
         }
     }
 
-    fetchPeoples() {
+    const fetchPeoples =  () => {
         fetch('/api/crud')
             .then(res => res.json())
             .then(data => {
-                this.setState({ peoples: data });
-                console.log(this.state.peoples);
+                setPeople(data);
+                console.log(peoples);
             });
     }
 
-    render() {
-        return (
-            <div className="card">
-                <div className="table-responsive">
-                    <link rel="stylesheet" href="modules/@fortawesome/fontawesome-free/css/all.min.css" />
+    useEffect(() => {
+        fetchPeoples();
+    }, []);
+    
+    return (
+        <div className="card">
+            <div className="table-responsive">
+                <link rel="stylesheet" href="modules/@fortawesome/fontawesome-free/css/all.min.css" />
 
-                    <table className="table table-striped table-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col" className="text-center">Nombre</th>
-                                <th scope="col" className="text-center">Apellido</th>
-                                <th scope="col" className="text-center">Cedula</th>
-                                <th scope="col" className="text-center">Edad</th>
-                                <th scope="col" className="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.peoples.map(people => {
-                                    return (
-                                        <tr key={people._id}>
-                                            <td className="text-center">{people.name}</td>
-                                            <td className="text-center">{people.lastName}</td>
-                                            <td className="text-center">{people.ci}</td>
-                                            <td className="text-center">{people.age}</td>
-                                            <td className="d-flex justify-content-center">
-                                                <button onClick={() => this.editPeople(people._id)} className="btn">
-                                                    <i className="fa fa-pencil-alt text-light"></i>
-                                                </button>
-                                                <button onClick={() => this.deletePeople(people._id)} className="btn">
-                                                    <i className="fa fa-times text-danger"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                <table className="table table-striped table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col" className="text-center">{t('Name.1')}</th>
+                            <th scope="col" className="text-center">{t('LastName.1')}</th>
+                            <th scope="col" className="text-center">{t('Email.1')}</th>
+                            <th scope="col" className="text-center">{t('Age.1')}</th>
+                            <th scope="col" className="text-center">{t('Actions.1')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            peoples.map(people => {
+                                return (
+                                    <tr key={people._id}>
+                                        <td className="text-center">{people.name}</td>
+                                        <td className="text-center">{people.lastName}</td>
+                                        <td className="text-center">{people.email}</td>
+                                        <td className="text-center">{people.age}</td>
+                                        <td className="d-flex justify-content-center">
+                                            <button onClick={() => editPeople(event, people._id)} className="btn">
+                                                <i className="fa fa-pencil-alt text-light"></i>
+                                            </button>
+                                            <button onClick={() => deletePeople(event, people._id)} className="btn">
+                                                <i className="fa fa-times text-danger"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
             </div>
+        </div>
 
-        )
-    }
+    )
 }
 
-export default Detail;

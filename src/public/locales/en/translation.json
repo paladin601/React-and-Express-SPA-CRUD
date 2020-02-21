@@ -1,0 +1,33 @@
+{
+    "En": {
+        "1": "En"
+    },
+    "Form": {
+        "1": "Form",
+        "2": "Edit Form"
+    },
+    "Details": {
+        "1": "Details"
+    },
+    "Name": {
+        "1": "Name"
+    },
+    "LastName": {
+        "1": "Last Name"
+    },
+    "Email": {
+        "1": "Email"
+    },
+    "Age": {
+        "1": "Age"
+    },
+    "Send": {
+        "1": "Send"
+    },
+    "Actions": {
+        "1": "Actions"
+    },
+    "Message":{
+        "1":"Are you sure you want to delete it?"
+    }
+}

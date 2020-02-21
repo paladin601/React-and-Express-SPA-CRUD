@@ -14,6 +14,8 @@
 
     Optional: Yarn.
 
+    Note: the dependencies that need install are NodeJs,MongoDB and Yarn only.
+
 ## 2 - Run mongoDB
     In the Terminal execute command :
 

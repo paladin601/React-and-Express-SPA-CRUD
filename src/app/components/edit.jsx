@@ -1,48 +1,51 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import {
+    useHistory
+} from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
+export default (props) => {
+    const { t, i18n } = useTranslation();
+    const [people, setPeople] = useState({
+        name: '',
+        lastName: '',
+        email: '',
+        age: '',
+        _id: ''
+    });
+    let history = useHistory();
 
 
-class Edit extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            lastName: '',
-            ci: '',
-            age: '',
-            _id: ''
-        };
-        fetch(`/api/crud/${this.props.match.params.id}`)
+    const fetchPeople = () => {
+        fetch(`/api/crud/${window.location.pathname.split('/')[2]}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                this.setState({
-                    name: data.name,
-                    lastName: data.lastName,
-                    ci: data.ci,
-                    age: data.age,
-                    _id: data._id
-                });
+                setPeople(data);
+                console.log(people);
             });
-        this.handleChange = this.handleChange.bind(this);
-        this.editPeople = this.editPeople.bind(this);
     }
 
-    handleChange(e) {
+    useEffect(() => {
+        fetchPeople();
+    }, []);
+
+
+    function handleChange(e) {
         const { name, value } = e.target;
-        this.setState({
-            [name]: value
-        });
+        setPeople({
+            ...people,
+            [e.target.name]: e.target.value
+        })
     }
 
-    editPeople() {
-        fetch(`/api/crud/${this.state._id}`, {
+    function editPeople() {
+        fetch(`/api/crud/${people._id}`, {
             method: 'PUT',
             body: JSON.stringify({
-                name: this.state.name,
-                lastName: this.state.lastName,
-                ci: this.state.ci,
-                age: this.state.age,
+                name: people.name,
+                lastName: people.lastName,
+                email: people.email,
+                age: people.age,
             }),
             headers: {
                 'Accept': 'application/json',
@@ -53,45 +56,41 @@ class Edit extends Component {
             .then(data => {
                 //window.M.toast({ html: 'People Updated' });
             });
-        this.props.history.push(`/detail`);
-
+        history.push("/detail");
     }
 
-    render() {
-        return (
-            <div className="card">
-                <div className="card-header">
-                    Formulario
-                </div>
-                <div className="card-body">
-                    <form onSubmit={this.editPeople}>
-
-                        <div className="form-group">
-                            <label htmlFor="name">Nombre</label>
-                            <input name="name" id="name" className="form-control" onChange={this.handleChange} type="text" value={this.state.name}autoFocus />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="lastName">Apellido</label>
-                            <input name="lastName" id="lastName" className="form-control" onChange={this.handleChange} type="text" value={this.state.lastName}/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="ci">Cedula</label>
-                            <input type="number" name="ci" id="ci" className="form-control" onChange={this.handleChange} value={this.state.ci} readOnly/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="age">Edad</label>
-                            <input type="number" name="age" id="age" className="form-control" onChange={this.handleChange} value={this.state.age} readOnly/>
-                        </div>
-
-                        <button type="submit" className="btn btn-success btn-lg btn-block">
-                            Send
-                        </button>
-                    </form>
-                </div>
+    return (
+        <div className="card">
+            <div className="card-header">
+                {t('Form.2')}
             </div>
-        )
-    }
+            <div className="card-body">
+                <form onSubmit={() => editPeople(event)}>
+
+                    <div className="form-group">
+                        <label htmlFor="name">{t('Name.1')}</label>
+                        <input name="name" id="name" className="form-control" onChange={() => handleChange(event)} type="text" value={people.name} autoFocus />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="lastName">{t('LastName.1')}</label>
+                        <input name="lastName" id="lastName" className="form-control" onChange={() => handleChange(event)} type="text" value={people.lastName} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="email">{t('Email.1')}</label>
+                        <input type="email" name="email" id="email" className="form-control" onChange={() => handleChange(event)} value={people.email} />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="age">{t('Age.1')}</label>
+                        <input type="number" name="age" id="age" className="form-control" onChange={() => handleChange(event)} value={people.age} readOnly />
+                    </div>
+
+                    <button type="submit" className="btn btn-success btn-lg btn-block">
+                        {t('Send.1')}
+                    </button>
+                </form>
+            </div>
+        </div>
+    )
 }
 
-export default Edit;

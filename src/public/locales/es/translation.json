@@ -1,0 +1,33 @@
+{
+    "En": {
+        "1": "Es"
+    },
+    "Form": {
+        "1": "Formulario",
+        "2": "Editar Formulario"
+    },
+    "Details": {
+        "1": "Detalles"
+    },
+    "Name": {
+        "1": "Nombre"
+    },
+    "LastName": {
+        "1": "Apellido"
+    },
+    "Email": {
+        "1": "Correo"
+    },
+    "Age": {
+        "1": "Edad"
+    },
+    "Send": {
+        "1": "Enviar"
+    },
+    "Actions": {
+        "1": "Acciones"
+    },
+    "Message":{
+        "1":"¿Estás seguro de que quieres borrarlo?"
+    }
+}
